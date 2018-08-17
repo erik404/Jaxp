@@ -1,0 +1,13 @@
+{
+    "name": "energyglobal/xml-parser-of-doom",
+    "description": "Generic XML parser",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Erik-Jan van de Wal",
+            "email": "ejvandewal@gmail.com"
+        }
+    ],
+    "require": {}
+}
