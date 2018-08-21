@@ -9,7 +9,7 @@ namespace Energyglobal\Libraries;
 /**
  * Class XmlParser
  *
- * @package EggmsBundle\Utils\Xml
+ * @package Energyglobal\Libraries
  *
  * Expects an instanced DOMDocument loaded with the XML file and an instanced object (entity).
  * The object and possible child objects will be hydrated with the XML information in DOMDocument and may be returned
