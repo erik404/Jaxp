@@ -1,2 +1,4 @@
+# ignore phpstorm config
+/.idea/
 
 /vendor/
