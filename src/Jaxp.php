@@ -10,7 +10,7 @@ namespace erik404;
  *
  * @package erik404
  *
- * Expects an instanced DOMDocument loaded with the XML file and an instanced object (entity).
+ * Expects a path to a XML file and an instanced parent object (entity).
  * The object and possible child objects will be hydrated with the XML information in DOMDocument and may be returned
  * by returnHydratedObjects().
  *
