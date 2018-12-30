@@ -105,6 +105,17 @@ class Jaxp
     }
 
     /**
+     * Returns the array holding all the hydrated objects.
+     *
+     * @return array
+     */
+    public function returnHydratedObjects(): array
+    {
+        $this->hydrateParent(); // hydrate the document
+        return $this->result;
+    }
+
+    /**
      * Call the main functions and returns the hydrated parent object
      */
     private function hydrateParent()
@@ -289,17 +300,6 @@ class Jaxp
         );
 
         return; // void
-    }
-
-    /**
-     * Returns the array holding all the hydrated objects.
-     *
-     * @return array
-     */
-    public function returnHydratedObjects(): array
-    {
-        $this->hydrateParent(); // hydrate the document
-        return $this->result;
     }
 
     /**
