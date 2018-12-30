@@ -1,13 +1,18 @@
 {
-    "name": "energyglobal/xml-parser-of-doom",
-    "description": "Generic XML parser",
-    "type": "library",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Erik-Jan van de Wal",
-            "email": "ejvandewal@gmail.com"
-        }
-    ],
-    "require": {}
+  "name": "erik404/jaxp",
+  "description": "XML parser for complex documents with entity/object hydration.",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Erik-Jan van de Wal",
+      "email": "ejvandewal@gmail.com"
+    }
+  ],
+  "require": {},
+  "autoload": {
+    "psr-0": {
+      "erik404": "src"
+    }
+  }
 }

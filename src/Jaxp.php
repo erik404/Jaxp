@@ -1,15 +1,15 @@
 <?php
 
 /**
- * Erik-Jan van de Wal <ejvandewal@gmail.com> - Energy Global B.V.
+ * Erik-Jan van de Wal <ejvandewal@gmail.com>
  */
 
-namespace Energyglobal\Libraries;
+namespace erik404;
 
 /**
  * Class XmlParser
  *
- * @package Energyglobal\Libraries
+ * @package erik404
  *
  * Expects an instanced DOMDocument loaded with the XML file and an instanced object (entity).
  * The object and possible child objects will be hydrated with the XML information in DOMDocument and may be returned
@@ -65,8 +65,7 @@ namespace Energyglobal\Libraries;
  *      ]
  *  ]
  */
-
-class XmlParser
+class Jaxp
 {
     /** constant definitions which are used in the mapping array */
     const KEY_CHILDREN = 'children';
@@ -87,18 +86,23 @@ class XmlParser
     private $result = [];
 
     /**
-     * XmlParser constructor.
-     * No type hinting for $object, if the type is asserted other possible valid types will throw an exception.
-     *
-     * XmlParser constructor.
-     * @param \DOMDocument $domDoc
+     * Jaxp constructor.
+     * @param string $xmlFile
      * @param $object
+     * @throws \Exception
      */
-    public function __construct(\DOMDocument $domDoc, $object)
+    public function __construct(string $xmlFile, $object)
     {
+        if (!file_exists($xmlFile)) {
+            throw new \Exception(sprintf('Could not find file "%s"', $xmlFile));
+
+        }
+
+        $this->domDoc = new \DOMDocument();
+        $this->domDoc->loadXML(file_get_contents($xmlFile));
+
         $this->mapping = $object::XML_MAPPING; // sets value to the XML_MAPPING constant of the passed object
         $this->object = $object;
-        $this->domDoc = $domDoc;
     }
 
     /**
@@ -246,7 +250,6 @@ class XmlParser
         }
 
         // if the node has attributes call the parseAttributes function
-        //TODO add handling multiple matches
         if ($node->hasAttributes()) $this->parseAttributes($this->mapping[self::KEY_MAP], $node);
 
 
@@ -254,8 +257,6 @@ class XmlParser
         if (is_array($this->mapping[self::KEY_MAP][$node->localName])) {
             // the value contains a child node, call the traverseArray function.
             $this->traverseArray($this->mapping[self::KEY_MAP][$node->localName], $node);
-
-            //TODO solve bug with same name on multiple levels, perhaps return true?
             return false; // void
         }
 
@@ -306,8 +307,7 @@ class XmlParser
      *
      * @return array
      */
-    public
-    function returnHydratedObjects(): array
+    public function returnHydratedObjects(): array
     {
         return $this->result;
     }
@@ -318,8 +318,7 @@ class XmlParser
      * @param array $map
      * @param \DOMNode $node
      */
-    private
-    function traverseArray(array $map, \DOMNode $node)
+    private function traverseArray(array $map, \DOMNode $node)
     {
         foreach ($map as $key => $value) {
             // traverse through array and loop through XML document for each iteration to match nodeName and array key.
