@@ -1,7 +1,6 @@
 <?php
-
 /**
- * Erik-Jan van de Wal <ejvandewal@gmail.com>
+ * Copyright (c) 2018 Erik-Jan van de Wal (ejvandewal@gmail.com)
  */
 
 namespace erik404;
@@ -106,17 +105,12 @@ class Jaxp
     }
 
     /**
-     * Call the main functions and returns the hydrated parent object.
-     *
-     * @return object
+     * Call the main functions and returns the hydrated parent object
      */
-    public function hydrateParent()
+    private function hydrateParent()
     {
         // parse the parent node.
         $this->parseParentNode();
-
-        // returns the hydrated object.
-        return $this->object;
     }
 
     /**
@@ -179,13 +173,9 @@ class Jaxp
      */
     private function callFunction(string $function, \DOMNode $node)
     {
-        //Assumption: Only leaf nodes have values that need to be set. This avoids naming conflicts with nodes higher
-        // up the tree.
         // Check that the node has only one child and that the child is not another internal node.
-        if ($node->childNodes->length == 1 && $node->firstChild->nodeType != XML_ELEMENT_NODE) {
+        if ($node->childNodes->length === 1 && $node->firstChild->nodeType !== XML_ELEMENT_NODE) {
             $this->object->{$function}($node->nodeValue);
-        } else {
-            // a tag with the same name, but a different place in the tree triggered callFunction.
         }
 
         return; // void
@@ -200,8 +190,7 @@ class Jaxp
     private function iterateNodes(\DOMNodeList $nodes, array $localMapping)
     {
         foreach ($nodes as $node) {
-            // always parse node, testing is done in this function.
-            //if node->localName  not in
+            // always parse node, testing is done in that function.
             $isKeyChild = $this->parseNode($node, $localMapping);
 
             /** @var \DOMNode $node */
@@ -309,6 +298,7 @@ class Jaxp
      */
     public function returnHydratedObjects(): array
     {
+        $this->hydrateParent(); // hydrate the document
         return $this->result;
     }
 
